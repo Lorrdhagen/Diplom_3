@@ -65,7 +65,7 @@ public class ConstructorTest {
 
     @Test
     @DisplayName("Переход кразделу «Соусы»")
-    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Начинки» и модального окна ингридиента")
+    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Соусы» и модального окна ингридиента")
     public void sauceTabAndIngredientClickShouldSeeSaucesAndDetails() {
         mainPage.sauceTabClick();
         mainPage.ingredientClick(SAUCE_NAME);
@@ -78,7 +78,7 @@ public class ConstructorTest {
 
     @Test
     @DisplayName("Переход кразделу «Булки»")
-    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Начинки» и модального окна ингридиента")
+    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Булки» и модального окна ингридиента")
     public void fillingsTabThenBunTabAndBunClickShouldSeeBunsAndDetails() {
         mainPage.sauceTabClick();
         mainPage.bunTabClick();
