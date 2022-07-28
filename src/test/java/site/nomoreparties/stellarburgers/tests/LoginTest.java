@@ -11,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.*;
 import site.nomoreparties.stellarburgers.data.User;
 import site.nomoreparties.stellarburgers.data.UserApi;
-import site.nomoreparties.stellarburgers.data.UserCredebtials;
 import com.codeborne.selenide.WebDriverRunner;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -48,11 +47,7 @@ public class LoginTest {
 
         user = User.getRandomUser();
         userApi = new UserApi();
-        registerPage = open(RegisterPage.REGISTER_PAGE_URL, RegisterPage.class);
-        registerPage.waitForLoadRegisterPage();
-        registerPage.fillInputsAndRegister(user.getName(), user.getEmail(), user.getPassword());
-        UserCredebtials userCredebtials = new UserCredebtials(user.getEmail(), user.getPassword());
-        accessToken = userApi.loginUser(userCredebtials);
+        accessToken = userApi.createUser(user);
     }
 
     @After
@@ -97,7 +92,7 @@ public class LoginTest {
     public void loginByEnterButtonOnRegisterPage() {
         mainPage = page(MainPage.class);
         loginPage = page(LoginPage.class);
-        open(RegisterPage.REGISTER_PAGE_URL);
+        registerPage = open(RegisterPage.REGISTER_PAGE_URL, RegisterPage.class);
         registerPage.waitForLoadRegisterPage();
         registerPage.enterButtonClick();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());

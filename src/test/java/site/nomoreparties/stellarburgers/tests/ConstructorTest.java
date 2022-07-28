@@ -9,13 +9,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.*;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ConstructorTest {
+
+    private final String EXPECTED_TAB_CLASS = "tab_tab_type_current__2BEPc";
+    private final String EXPECTED_MODAL_CLASS = "Modal_modal_opened__3ISw4";
+    private final String SAUCE_NAME = "Соус фирменный Space Sauce";
+    private final String FILLING_NAME = "Сыр с астероидной плесенью";
+    private final String BUN_NAME = "Краторная булка N-200i";
+
 
     private WebDriver driver;
     private MainPage mainPage;
@@ -24,7 +30,7 @@ public class ConstructorTest {
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         //запуск тестов в Chrome
-      //  System.setProperty("webdriver.chrome.driver", "D:\\Games\\Newpapka\\Autotests\\webdrivers\\bin\\chromedriver.exe");
+        //  System.setProperty("webdriver.chrome.driver", "D:\\Games\\Newpapka\\Autotests\\webdrivers\\bin\\chromedriver.exe");
 
         // Запуск тестов в Yandex
         System.setProperty("webdriver.yandexdriver", "D:\\Games\\Newpapka\\Autotests\\webdrivers\\bin\\yandexdriver.exe");
@@ -47,36 +53,39 @@ public class ConstructorTest {
 
     @Test
     @DisplayName("Переход кразделу «Начинки»")
-    @Description("После перехода выполняется клик по начинке, в модальном окне проверяется  наличие заголовка «Детали ингредиента»")
+    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Начинки» и модального окна ингридиента")
     public void fillingsTabAndIngredientClickShouldSeeFillingsAndDetails() {
         mainPage.fillingsTabClick();
-        Selenide.sleep(500);
-        mainPage.immortalMollusksClick();
-        Selenide.sleep(500);
-        assertEquals("Детали ингредиента", mainPage.getIngredientDetailText());
+        mainPage.ingredientClick(FILLING_NAME);
+        System.out.println(mainPage.getFillingTab().getAttribute("class"));
+        System.out.println(mainPage.getModals().getAttribute("class"));
+        assertTrue(mainPage.getFillingTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
+        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
     }
 
     @Test
     @DisplayName("Переход кразделу «Соусы»")
-    @Description("После перехода выполняется клик по начинке, в модальном окне проверяется  наличие заголовка «Детали ингредиента»")
+    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Начинки» и модального окна ингридиента")
     public void sauceTabAndIngredientClickShouldSeeSaucesAndDetails() {
         mainPage.sauceTabClick();
-        Selenide.sleep(500);
-        mainPage.spaceSauceClick();
-        Selenide.sleep(500);
-        assertEquals("Детали ингредиента", mainPage.getIngredientDetailText());
+        mainPage.ingredientClick(SAUCE_NAME);
+        System.out.println(mainPage.getSauceTab().getAttribute("class"));
+        System.out.println(mainPage.getModals().getAttribute("class"));
+        assertTrue(mainPage.getSauceTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
+        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
+
     }
 
     @Test
     @DisplayName("Переход кразделу «Булки»")
-    @Description("После перехода выполняется клик по начинке, в модальном окне проверяется  наличие заголовка «Детали ингредиента»")
+    @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Начинки» и модального окна ингридиента")
     public void fillingsTabThenBunTabAndBunClickShouldSeeBunsAndDetails() {
-        mainPage.fillingsTabClick();
-        Selenide.sleep(500);
+        mainPage.sauceTabClick();
         mainPage.bunTabClick();
-        Selenide.sleep(500);
-        mainPage.craterBunClick();
-        Selenide.sleep(500);
-        assertEquals("Детали ингредиента", mainPage.getIngredientDetailText());
+        mainPage.ingredientClick(BUN_NAME);
+        System.out.println(mainPage.getBunTab().getAttribute("class"));
+        System.out.println(mainPage.getModals().getAttribute("class"));
+        assertTrue(mainPage.getBunTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
+        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
     }
 }

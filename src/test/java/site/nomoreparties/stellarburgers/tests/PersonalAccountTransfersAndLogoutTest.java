@@ -1,6 +1,5 @@
 package site.nomoreparties.stellarburgers.tests;
 
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
@@ -12,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.*;
 import site.nomoreparties.stellarburgers.data.User;
 import site.nomoreparties.stellarburgers.data.UserApi;
-import site.nomoreparties.stellarburgers.data.UserCredebtials;
 import com.codeborne.selenide.WebDriverRunner;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -28,7 +26,6 @@ public class PersonalAccountTransfersAndLogoutTest {
     private Header header;
     private MainPage mainPage;
     private LoginPage loginPage;
-    private RegisterPage registerPage;
     private AccountProfilePage accountProfilePage;
 
     @Before
@@ -51,14 +48,11 @@ public class PersonalAccountTransfersAndLogoutTest {
         userApi = new UserApi();
         mainPage = page(MainPage.class);
         loginPage = page(LoginPage.class);
-        registerPage = open(RegisterPage.REGISTER_PAGE_URL, RegisterPage.class);
-        registerPage.waitForLoadRegisterPage();
-        registerPage.fillInputsAndRegister(user.getName(), user.getEmail(), user.getPassword());
+        accessToken = userApi.createUser(user);
+        loginPage = open(LoginPage.LOGIN_PAGE_URL, LoginPage.class);
         loginPage.waitForLoadLoginPage();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
-        Selenide.sleep(500);
-        UserCredebtials userCredebtials = new UserCredebtials(user.getEmail(), user.getPassword());
-        accessToken = userApi.loginUser(userCredebtials);
+        mainPage.waitForLoadMainPage();
     }
 
     @After
