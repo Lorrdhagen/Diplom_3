@@ -87,6 +87,8 @@ public class RegistrationTest {
         registerPage.waitForLoadRegisterPage();
         user.setPassword("abc12");
         registerPage.fillInputsAndRegister(user.getName(), user.getEmail(), user.getPassword());
+        UserCredebtials userCredebtials = new UserCredebtials(user.getEmail(), user.getPassword());
+        accessToken = userApi.loginUser(userCredebtials);
         assertEquals("Некорректный пароль", registerPage.getPaswordErrorText());
     }
 }

@@ -18,7 +18,7 @@ public class ConstructorTest {
 
     private final String EXPECTED_TAB_CLASS = "tab_tab_type_current__2BEPc";
     private final String EXPECTED_MODAL_CLASS = "Modal_modal_opened__3ISw4";
-    private final String SAUCE_NAME = "Соус фирменный Space Sauce";
+    private final String SAUCE_NAME = "Соус с шипами Антарианского плоскоходца";
     private final String FILLING_NAME = "Сыр с астероидной плесенью";
     private final String BUN_NAME = "Краторная булка N-200i";
 
@@ -57,10 +57,8 @@ public class ConstructorTest {
     public void fillingsTabAndIngredientClickShouldSeeFillingsAndDetails() {
         mainPage.fillingsTabClick();
         mainPage.ingredientClick(FILLING_NAME);
-        System.out.println(mainPage.getFillingTab().getAttribute("class"));
-        System.out.println(mainPage.getModals().getAttribute("class"));
-        assertTrue(mainPage.getFillingTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
-        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
+        assertTrue(mainPage.checkFillingTabContainsClass(EXPECTED_TAB_CLASS));
+        assertTrue(mainPage.checkModalContainsClass(EXPECTED_MODAL_CLASS));
     }
 
     @Test
@@ -68,11 +66,9 @@ public class ConstructorTest {
     @Description("После перехода выполняется клик по начинке, проверяется изменение класса раздела «Соусы» и модального окна ингридиента")
     public void sauceTabAndIngredientClickShouldSeeSaucesAndDetails() {
         mainPage.sauceTabClick();
+        assertTrue(mainPage.checkSauceTabContainsClass(EXPECTED_TAB_CLASS));
         mainPage.ingredientClick(SAUCE_NAME);
-        System.out.println(mainPage.getSauceTab().getAttribute("class"));
-        System.out.println(mainPage.getModals().getAttribute("class"));
-        assertTrue(mainPage.getSauceTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
-        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
+        assertTrue(mainPage.checkModalContainsClass(EXPECTED_MODAL_CLASS));
 
     }
 
@@ -83,9 +79,7 @@ public class ConstructorTest {
         mainPage.sauceTabClick();
         mainPage.bunTabClick();
         mainPage.ingredientClick(BUN_NAME);
-        System.out.println(mainPage.getBunTab().getAttribute("class"));
-        System.out.println(mainPage.getModals().getAttribute("class"));
-        assertTrue(mainPage.getBunTab().getAttribute("class").contains(EXPECTED_TAB_CLASS));
-        assertTrue(mainPage.getModals().getAttribute("class").contains(EXPECTED_MODAL_CLASS));
+        assertTrue(mainPage.checkBunTabContainsClass(EXPECTED_TAB_CLASS));
+        assertTrue(mainPage.checkModalContainsClass(EXPECTED_MODAL_CLASS));
     }
 }

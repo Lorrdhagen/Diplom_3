@@ -75,6 +75,11 @@ public class MainPage {
         return constructorTabs.get(0);
     }
 
+    @Step("Проверка наличия ожидаемого класса у вкладки Булки")
+    public boolean checkBunTabContainsClass(String className) {
+        return getBunTab().getAttribute("class").contains(className);
+    }
+
     @Step("Клик по вкладке Соусы")
     public void sauceTabClick() {
         sauceTab.click();
@@ -82,6 +87,11 @@ public class MainPage {
 
     public SelenideElement getSauceTab() {
         return constructorTabs.get(1);
+    }
+
+    @Step("Проверка наличия ожидаемого класса у вкладки Соусы")
+    public boolean checkSauceTabContainsClass(String className) {
+        return getSauceTab().getAttribute("class").contains(className);
     }
 
     @Step("Клик по ингредиенту")
@@ -94,6 +104,11 @@ public class MainPage {
         return modals.get(0);
     }
 
+    @Step("Проверка наличия ожидаемого класса у модального окна Детали ингридиента")
+    public boolean checkModalContainsClass(String className) {
+        return getModals().getAttribute("class").contains(className);
+    }
+
     @Step("Клик по вкладке Начинки")
     public void fillingsTabClick() {
         fillingsTab.click();
@@ -101,5 +116,10 @@ public class MainPage {
 
     public SelenideElement getFillingTab() {
         return constructorTabs.get(2);
+    }
+
+    @Step("Проверка наличия ожидаемого класса у вкладки Начинки")
+    public boolean checkFillingTabContainsClass(String className) {
+        return getFillingTab().getAttribute("class").contains(className);
     }
 }

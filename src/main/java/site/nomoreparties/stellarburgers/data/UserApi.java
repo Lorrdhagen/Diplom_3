@@ -27,7 +27,6 @@ public class UserApi extends BaseApiSpec {
                 .when()
                 .post(LOGIN_URL)
                 .then()
-                .assertThat().statusCode(200)
                 .extract().path("accessToken");
     }
 
