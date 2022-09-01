@@ -104,7 +104,7 @@ public class MainPage {
         return modals.get(0);
     }
 
-    @Step("Проверка наличия ожидаемого класса у модального окна Детали ингридиента")
+    @Step("Проверка наличия ожидаемого класса у модального окна Детали ингредиента")
     public boolean checkModalContainsClass(String className) {
         return getModals().getAttribute("class").contains(className);
     }
