@@ -16,8 +16,6 @@ import site.nomoreparties.stellarburgers.data.UserApi;
 import site.nomoreparties.stellarburgers.data.UserCredebtials;
 import com.codeborne.selenide.WebDriverRunner;
 
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.page;
 import static org.junit.Assert.assertEquals;
 
 public class RegistrationTest {
@@ -46,11 +44,12 @@ public class RegistrationTest {
         driver = new ChromeDriver(options);
         WebDriverRunner.setWebDriver(driver);
 
-        loginPage = page(LoginPage.class);
-        registerPage = page(RegisterPage.class);
+        loginPage = new LoginPage();
+        registerPage = new RegisterPage();
         user = User.getRandomUser();
         userApi = new UserApi();
-        mainPage = open(MainPage.MAIN_PAGE_URL, MainPage.class);
+        mainPage = new MainPage();
+        mainPage.open();
         mainPage.waitForLoadMainPage();
     }
 

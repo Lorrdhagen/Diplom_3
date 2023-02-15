@@ -11,7 +11,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import site.nomoreparties.stellarburgers.*;
 import com.codeborne.selenide.WebDriverRunner;
 
-import static com.codeborne.selenide.Selenide.open;
 import static org.junit.Assert.assertTrue;
 
 public class ConstructorTest {
@@ -21,7 +20,6 @@ public class ConstructorTest {
     private final String SAUCE_NAME = "Соус с шипами Антарианского плоскоходца";
     private final String FILLING_NAME = "Сыр с астероидной плесенью";
     private final String BUN_NAME = "Краторная булка N-200i";
-
 
     private WebDriver driver;
     private MainPage mainPage;
@@ -42,7 +40,8 @@ public class ConstructorTest {
         driver = new ChromeDriver(options);
         WebDriverRunner.setWebDriver(driver);
 
-        mainPage = open(MainPage.MAIN_PAGE_URL, MainPage.class);
+        mainPage = new MainPage();
+        mainPage.open();
         mainPage.waitForLoadMainPage();
     }
 

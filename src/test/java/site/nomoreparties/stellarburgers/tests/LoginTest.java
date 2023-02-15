@@ -13,11 +13,11 @@ import site.nomoreparties.stellarburgers.data.User;
 import site.nomoreparties.stellarburgers.data.UserApi;
 import com.codeborne.selenide.WebDriverRunner;
 
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.page;
 import static org.junit.Assert.assertEquals;
 
 public class LoginTest {
+
+    private final String EXPECTED_LOGIN_TEXT = "Оформить заказ";
 
     private WebDriver driver;
     private String accessToken;
@@ -48,6 +48,8 @@ public class LoginTest {
         user = User.getRandomUser();
         userApi = new UserApi();
         accessToken = userApi.createUser(user);
+        mainPage = new MainPage();
+        loginPage = new LoginPage();
     }
 
     @After
@@ -62,55 +64,51 @@ public class LoginTest {
     @DisplayName("Вход по кнопке «Войти в аккаунт» на главной странице")
     @Description("После выполнения входа на главной странице проверяется наличие кнопки Оформить заказ")
     public void loginByEnterAccountButtonOnMainPage() {
-        loginPage = page(LoginPage.class);
-        mainPage = open(MainPage.MAIN_PAGE_URL, MainPage.class);
+        mainPage.open();
         mainPage.waitForLoadMainPage();
         mainPage.enterAccountButtonClick();
         loginPage.waitForLoadLoginPage();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
         mainPage.waitForLoadMainPage();
-        assertEquals("Оформить заказ", mainPage.getOrderButtonText());
+        assertEquals(EXPECTED_LOGIN_TEXT, mainPage.getOrderButtonText());
     }
 
     @Test
     @DisplayName("Вход через кнопку «Личный кабинет»")
     @Description("После выполнения входа, на главной странице проверяется наличие кнопки Оформить заказ")
     public void loginByPersonalAccountButtonOnHeader() {
-        header = page(Header.class);
-        loginPage = page(LoginPage.class);
-        mainPage = open(MainPage.MAIN_PAGE_URL, MainPage.class);
+        header = new Header();
+        mainPage.open();
         header.personalAccButtonClick();
         loginPage.waitForLoadLoginPage();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
         mainPage.waitForLoadMainPage();
-        assertEquals("Оформить заказ", mainPage.getOrderButtonText());
+        assertEquals(EXPECTED_LOGIN_TEXT, mainPage.getOrderButtonText());
     }
 
     @Test
     @DisplayName("Вход через кнопку «Войти» на странице регистрации")
     @Description("После выполнения входа, на главной странице проверяется наличие кнопки Оформить заказ")
     public void loginByEnterButtonOnRegisterPage() {
-        mainPage = page(MainPage.class);
-        loginPage = page(LoginPage.class);
-        registerPage = open(RegisterPage.REGISTER_PAGE_URL, RegisterPage.class);
+        registerPage = new RegisterPage();
+        registerPage.open();
         registerPage.waitForLoadRegisterPage();
         registerPage.enterButtonClick();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
         mainPage.waitForLoadMainPage();
-        assertEquals("Оформить заказ", mainPage.getOrderButtonText());
+        assertEquals(EXPECTED_LOGIN_TEXT, mainPage.getOrderButtonText());
     }
 
     @Test
     @DisplayName("Вход через кнопку «Войти» на странице восстановления пароля")
     @Description("После выполнения входа, на главной странице проверяется наличие кнопки Оформить заказ")
     public void loginByEnterButtonOnForgotPasswordPage() {
-        mainPage = page(MainPage.class);
-        loginPage = page(LoginPage.class);
-        forgotPasswordPage = open(ForgotPasswordPage.FORGOT_PASSWORD_PAGE_URL, ForgotPasswordPage.class);
+        forgotPasswordPage = new ForgotPasswordPage();
+        forgotPasswordPage.open();
         forgotPasswordPage.waitForLoadForgotPassPage();
         forgotPasswordPage.enterButtonClick();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
         mainPage.waitForLoadMainPage();
-        assertEquals("Оформить заказ", mainPage.getOrderButtonText());
+        assertEquals(EXPECTED_LOGIN_TEXT, mainPage.getOrderButtonText());
     }
 }
