@@ -1,25 +1,21 @@
 package site.nomoreparties.stellarburgers;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
+import org.openqa.selenium.By;
 import io.qameta.allure.Step;
 
-import java.time.Duration;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.visible;
 
 public class AccountProfilePage {
 
     public static final String ACCOUNT_PROFILE_PAGE_URL = "https://stellarburgers.nomoreparties.site/account/profile";
 
-    @FindBy(how = How.XPATH, using = "//button[text()='Выход']")
-    private SelenideElement exitButton;
-
-    @FindBy(how = How.XPATH, using = "//a[text()='Профиль']")
-    private SelenideElement profileLink;
+    private SelenideElement exitButton = $(By.xpath("//button[text()='Выход']"));
+    private SelenideElement profileLink = $(By.xpath("//a[text()='Профиль']"));
 
     public void waitForLoadAccProfilePage() {
-        profileLink.shouldBe(Condition.visible, Duration.ofSeconds(1));
+        profileLink.shouldBe(visible);
     }
 
     @Step("Получение текста вкладки Профиль")

@@ -13,8 +13,6 @@ import site.nomoreparties.stellarburgers.data.User;
 import site.nomoreparties.stellarburgers.data.UserApi;
 import com.codeborne.selenide.WebDriverRunner;
 
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.page;
 import static org.junit.Assert.assertEquals;
 
 public class PersonalAccountTransfersAndLogoutTest {
@@ -46,13 +44,16 @@ public class PersonalAccountTransfersAndLogoutTest {
 
         user = User.getRandomUser();
         userApi = new UserApi();
-        mainPage = page(MainPage.class);
-        loginPage = page(LoginPage.class);
+        header = new Header();
+        mainPage = new MainPage();
+        loginPage = new LoginPage();
+        accountProfilePage = new AccountProfilePage();
         accessToken = userApi.createUser(user);
-        loginPage = open(LoginPage.LOGIN_PAGE_URL, LoginPage.class);
+        loginPage.open();
         loginPage.waitForLoadLoginPage();
         loginPage.fillInputsAndLogin(user.getEmail(), user.getPassword());
         mainPage.waitForLoadMainPage();
+
     }
 
     @After
@@ -67,8 +68,6 @@ public class PersonalAccountTransfersAndLogoutTest {
     @DisplayName("Переход в личный кабинет по клику на кнопку «Личный кабинет»")
     @Description("После выполнения выполнения перехода в личном кабинете проверяется наличие вкладки «Профиль»")
     public void personalAccountTransferByPersonalAccButtonOnHeader() {
-        header = page(Header.class);
-        accountProfilePage = page(AccountProfilePage.class);
         header.personalAccButtonClick();
         accountProfilePage.waitForLoadAccProfilePage();
         assertEquals("Профиль", accountProfilePage.getUserProfileText());
@@ -78,8 +77,6 @@ public class PersonalAccountTransfersAndLogoutTest {
     @DisplayName("Переход из личного кабинета в конструктор по клику на кнопку «Конструктор»")
     @Description("После выполнения выполнения перехода, на главной странице проверяется наличие заголовка «Соберите бургер»")
     public void transferToConstructorFromPersonalAccByConstructorButton() {
-        header = page(Header.class);
-        accountProfilePage = page(AccountProfilePage.class);
         header.personalAccButtonClick();
         accountProfilePage.waitForLoadAccProfilePage();
         header.constructorButtonClick();
@@ -91,8 +88,6 @@ public class PersonalAccountTransfersAndLogoutTest {
     @DisplayName("Переход из личного кабинета в конструктор по клику на логотип «Stellar Burgers»")
     @Description("После выполнения выполнения перехода, на главной странице проверяется наличие заголовка «Соберите бургер»")
     public void transferToConstructorFromPersonalAccByStellarBurgersLogo() {
-        header = page(Header.class);
-        accountProfilePage = page(AccountProfilePage.class);
         header.personalAccButtonClick();
         accountProfilePage.waitForLoadAccProfilePage();
         header.stellarBurgerLogoClick();
@@ -104,8 +99,6 @@ public class PersonalAccountTransfersAndLogoutTest {
     @DisplayName("Выход из аккаунта по кнопке «Выйти» в личном кабинете")
     @Description("После выполнения выхода из аккаунта, проверяется наличие заголовка «Вход»")
     public void personalAccountExit() {
-        header = page(Header.class);
-        accountProfilePage = page(AccountProfilePage.class);
         header.personalAccButtonClick();
         accountProfilePage.waitForLoadAccProfilePage();
         accountProfilePage.exitButtonClick();

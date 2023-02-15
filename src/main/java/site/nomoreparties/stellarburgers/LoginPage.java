@@ -1,37 +1,32 @@
 package site.nomoreparties.stellarburgers;
 
-import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
+import org.openqa.selenium.By;
 import io.qameta.allure.Step;
 
-import java.time.Duration;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.focused;
 
 public class LoginPage {
 
     public static final String LOGIN_PAGE_URL = "https://stellarburgers.nomoreparties.site/login";
 
-    @FindBy(how = How.XPATH, using = "//input[@name='name']")
-    private SelenideElement emailInput;
-
-    @FindBy(how = How.XPATH, using = "//input[@name='Пароль']")
-    private SelenideElement passwordInput;
-
-    @FindBy(how = How.XPATH, using = "//button[text()='Войти']")
-    private SelenideElement enterButton;
-
-    @FindBy(how = How.XPATH, using = "//a[text()='Зарегистрироваться']")
-    private SelenideElement registerButton;
-
-    @FindBy(how = How.XPATH, using = "//a[text()='Восстановить пароль']")
-    private SelenideElement recoverPasswordButton;
-
-    @FindBy(how = How.XPATH, using = "//h2[text()='Вход']")
-    private SelenideElement entranceText;
+    private SelenideElement emailInput = $(By.xpath("//input[@name='name']"));
+    private SelenideElement passwordInput = $(By.xpath("//input[@name='Пароль']"));
+    private SelenideElement enterButton = $(By.xpath("//button[text()='Войти']"));
+    private SelenideElement registerButton = $(By.xpath("//a[text()='Зарегистрироваться']"));
+    private SelenideElement recoverPasswordButton = $(By.xpath("//a[text()='Восстановить пароль']"));
+    private SelenideElement entranceText = $(By.xpath("//h2[text()='Вход']"));
 
     public void waitForLoadLoginPage() {
-        entranceText.shouldBe(Condition.visible, Duration.ofSeconds(4));
+        entranceText.shouldBe(visible);
+    }
+
+    @Step("Открыть страницу входа")
+    public void open() {
+        Selenide.open(LOGIN_PAGE_URL);
     }
 
     @Step("Клик по кнопке Зарегистрироваться")
@@ -47,9 +42,9 @@ public class LoginPage {
     @Step("Заполнение полей Email, Пароль и клик по кнопке Войти")
     public void fillInputsAndLogin(String email, String password) {
         emailInput.click();
-        emailInput.shouldBe(Condition.focused).setValue(email);
+        emailInput.shouldBe(focused).setValue(email);
         passwordInput.click();
-        passwordInput.shouldBe(Condition.focused).setValue(password);
+        passwordInput.shouldBe(focused).setValue(password);
         enterButton.click();
     }
 }
